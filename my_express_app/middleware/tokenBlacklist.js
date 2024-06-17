@@ -39,9 +39,6 @@ connectRedis().catch(err => {
 
 const blacklistToken = async (token, expiresIn) => {
     try {
-        // Log the types of token and expiresIn
-        console.log('Token:', token, 'Type of token:', typeof token);
-        console.log('ExpiresIn:', expiresIn, 'Type of expiresIn:', typeof expiresIn);
 
         // Ensure token is a string and expiresIn is a number
         if (typeof token !== 'string' || typeof expiresIn !== 'number') {
