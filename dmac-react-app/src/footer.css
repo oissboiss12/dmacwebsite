@@ -1,0 +1,11 @@
+.App-footer {
+    background-color: #758D40;
+    width: 100%; /* Ensure the header spans the full width */
+    position: relative; /* Fix the header at the top */
+    bottom: 0; /* Position it at the top */
+    left: 0; /* Position it at the left edge */
+    z-index: 1000; /* Ensure it is on top of other elements */
+    padding: 1.25rem; /* Add some padding */
+    display: flex;
+    align-items: center;
+}
