@@ -1,0 +1,14 @@
+.text-size {
+    font-size: 28px;
+}
+
+.img-size {
+    height: 25%;
+    width: 25%;
+    margin-right: 6px;
+}
+
+.client-title {
+    font-size: 54px;
+    font-weight: 600;
+}

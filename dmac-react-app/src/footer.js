@@ -23,8 +23,12 @@ function Footer() {
             </div>
             <div className="container mx-auto px-4 text-center mt-10">
                 <div className="flex justify-center space-x-4">
-                <a href="https://facebook.com" className="rounded-full bg-white text-[#758D40] p-3">FB</a>
-                <a href="https://twitter.com" className="rounded-full bg-white text-[#758D40] p-3">TW</a>
+                <a href="https://www.facebook.com/dmactruckandtrailer/" className="rounded-full bg-white text-[#758D40] p-3">
+                    <i className="fab fa-facebook-f"></i>
+                </a>
+                <a href="mailto:info@dmactruckandtrailer.co.uk" className="rounded-full bg-white text-[#758D40] p-3">
+                    <i className="fas fa-envelope"></i>
+                </a>
                 </div>
                 <p className="mt-4">&copy; 2024 DMAC Truck and Trailers Ltd. All rights reserved.</p>   
             </div>    

@@ -1,0 +1,28 @@
+.title {
+    font-size: 64px;
+    font-weight: 600;
+    
+}
+
+.border-bg {
+    border-color: #758D40;
+}
+
+.img-size {
+    height: 25%;
+    width: 25%;
+    margin-right: 6px;
+}
+
+.client-title {
+    font-size: 54px;
+    font-weight: 600;
+}
+
+.img-margin {
+    margin-left: 64px;
+}
+
+.text-size {
+    font-size: 18px;
+} 

@@ -7,6 +7,12 @@ const newsRoute = require('./routes/news-route');
 const connectDB = require('./config/db');
 const { isBlacklisted } = require('./middleware/tokenBlacklist'); // Ensure you use the correct function for middleware
 
+const bodyParser = require('body-parser');
+const express = require('express');
+const nodemailer = require('nodemailer');
+const cors = require('cors');
+
+
 const app = express();
 
 // Connect Database
@@ -42,3 +48,43 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+app.use(bodyParser.json());
+
+app.use(cors());
+
+app.post('/send', (req, res) => {
+    const { name, lastName, email, phone, company, message } = req.body;
+
+    const transporter = nodemailer.createTransport({
+        service: 'outlook',
+        auth: {
+            user: 'desi@dmactruckandtrailers.co.uk',
+            pass: 'enter password here'
+        }
+    })
+
+    const mailOptions = {
+        from: email,
+        to: 'desi@dmactruckandtrailers.co.uk',
+        subject: 'Contact Form Submission',
+        text: `
+        First-Name: ${name}    Last-Name: ${lastName}\n
+        Email: ${email}\n
+        Phone: ${phone}\n
+        Company: ${company}\n
+        Message: ${message}
+      `
+    }
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return res.status(500).send(error.toString());
+        }
+        res.status(200).send('Email sent: ' + info.response);
+    });
+});
+
+app.listen(3001, () => {
+    console.log('Server is running on port 3001');
+  });

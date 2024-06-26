@@ -41,3 +41,21 @@
     background-color: #000000;
     color: #758D40;
 }
+
+.dropdown-link {
+    display: block; 
+    padding: 4px 2px; 
+    color: #000000;
+    background-color: #758D40;
+  }
+
+  .dropdown-link:hover {
+     
+    background-color: #000000;
+    color: #758D40; 
+    transition: background-color 0.3s ease;
+  }
+
+button:focus {
+    outline: none;
+}

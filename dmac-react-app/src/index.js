@@ -6,6 +6,7 @@ import App from './App';
 import NavBar from './NavBar';
 import Footer from './footer';
 import reportWebVitals from './reportWebVitals';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,0 +1,42 @@
+.service1 {
+    height: 100%;
+    width: 100%;
+}
+
+.service-item {
+    @apply flex flex-col items-center mb-8;
+  }
+
+  .service1 {
+    @apply mx-auto mt-8;
+  }
+
+  .text-box {
+    @apply bg-gray-800 p-4 mt-4 rounded shadow-lg;
+  }
+
+  .text-content {
+    @apply text-center text-lg mb-2;
+  }
+
+  .nav-button {
+    display: flex;
+    justify-content: center; /* Center the navigation links */
+    align-items: center;
+    list-style: none; /* Remove default list styling */
+    margin: 0.75rem;
+    color: #000000;
+    background-color: #758D40;
+    border-radius: 2px;
+    padding: 3px 35px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: calc(8px + 1.25vmin);
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    border-color: #E1D9D1;
+    background-color: #000000;
+    color: #758D40;
+}
