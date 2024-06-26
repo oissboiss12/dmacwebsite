@@ -6,12 +6,12 @@ import './App.css';
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
-        name: '',
+        firstName: '',
         lastName: '',
         email: '',
         phone: '',
         company: '',
-        comment: ''
+        message: ''
     });
 
 const handleChange = (e) => {
@@ -24,7 +24,11 @@ const handleChange = (e) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/send', formData)
+    axios.post('http://localhost:3001/send', formData, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
       .then((response) => {
         alert('Message Sent Successfully');
       })
@@ -38,7 +42,7 @@ const handleChange = (e) => {
         <div className="relative bg-cover bg-center h-64 flex items-center justify-center" style={{ backgroundImage: 'url(/dmac.jpg)' }}>
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
                 <div className="text-center text-white">
-                    <h1 className="text-4xl font-bold">Contact Us</h1>
+                    <h1 className="title">Contact Us</h1>
                 </div>
             </div>
         </div>
@@ -128,9 +132,9 @@ const handleChange = (e) => {
                         <textarea
                             className="border p-2 w-full"
                             rows="4"
-                            name="comment"
+                            name="message"
                             placeholder="Comment"
-                            value={formData.comment}
+                            value={formData.message}
                             onChange={handleChange}
                             aria-label="Comment"
                             required

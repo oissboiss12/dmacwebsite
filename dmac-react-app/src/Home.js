@@ -3,10 +3,13 @@ import Slideshow from './Slideshow';
 import React from 'react';
 import './index.css';
 import {Link} from 'react-router-dom';
+import {Carousel} from 'react-responsive-carousel';
+
 
 const Home = () => {
   return (
-    <div className='body-bg'>
+    <>
+    <div className='bg-black'>
       <Slideshow/>
       
       <div className="flex flex-col md:flex-row items-center justify-center w-full min-h-screen p-4">
@@ -34,8 +37,28 @@ const Home = () => {
           
         </div>
       </div>
+    
       
+
+    <div className="p-8 flex flex-col md:flex-row items-center bg-[#758D40] bg-opacity-75 justify-center w-full min-h-screen p-4">
+      <h2 className="client-title text-center"> The Clients</h2>
+      <Carousel>
+        <div>
+          <img src="/dmac.jpg" alt="Image 1" />
+          <p className="legend">Image 1</p>
+        </div>
+        <div>
+          <img src="/dmac.jpg" alt="Image 2" />
+          <p className="legend">Image 2</p>
+        </div>
+        <div>
+          <img src="/dmac.jpg" alt="Image 3" />
+          <p className="legend">Image 3</p>
+        </div>
+      </Carousel>
     </div>
+  </div>
+  </>
   );
 }
 
