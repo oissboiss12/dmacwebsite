@@ -88,7 +88,7 @@ function NavBar() {
     <div className="flex flex-col p-4 mt-24">
       <Link to="/" className="nav-link py-2">Home</Link>
       <Link to="/about" className="nav-link py-2">About Us</Link>
-      <Link to="#services" className="nav-link py-2">Services</Link>
+      <Link to="/services" className="nav-link py-2">Services</Link>
       <Link to="/contact-us" className="nav-link py-2">Contact</Link>
       <Link to="#news" className="nav-link py-2">News</Link>
     </div>
