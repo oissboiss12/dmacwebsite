@@ -1,3 +1,56 @@
+
+.carousel .slider-wrapper.axis-horizontal .slider {
+  display: flex;
+}
+
+.carousel .slider-wrapper.axis-horizontal .slider .slide {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel .control-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.carousel .control-dots .dot {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.carousel .control-dots .dot.selected {
+  background-color: #000;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .client-title {
+    font-size: 1.75rem;
+  }
+
+  .carousel .slider-wrapper.axis-horizontal .slider {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 769px) {
+  .carousel .slider-wrapper.axis-horizontal .slider {
+    flex-direction: row;
+  }
+}
+
 .App {
   text-align: center;
 }
@@ -18,7 +71,7 @@
 
 .text1 {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 700;
   color: black;
   text-align: center;
 }
@@ -38,4 +91,30 @@
 
 .custom-margin-bottom {
   margin-bottom: 2rem; /* Adjust the value as needed */
+}
+
+.text-client-size {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.testimonial-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.border-input {
+  border: 2px solid;
+}
+
+.custom-button {
+  width: 150px;
+}
+
+.delete-bg {
+  background-color: red;
+}
+
+.edit-bg {
+  background-color: yellow;
 }

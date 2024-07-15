@@ -28,21 +28,21 @@ const Services = () => {
             <img src="/dmac.jpg" alt="Service#2" className="service1 border-8 border-gray-900 mx-auto"/>
             <div className="text-box">
               <p className="text-content"> Discover our team and their expertise.</p>
-              <Link to={"#service-repairs"} className="nav-button">Repairs</Link>
+              <Link to={"/service-repairs"} className="nav-button">Repairs</Link>
             </div>
           </div>
           <div className="service-item">
             <img src="/dmac.jpg" alt="Service#3" className="service1 border-8 border-gray-900 mx-auto"/>
             <div className="text-box">
               <p className="text-content"> Explore the company's vacancies and roles.</p>
-              <Link to={"#service-fabrication"} className="nav-button">Fabrication</Link>
+              <Link to={"/service-fabrication"} className="nav-button">Fabrication</Link>
             </div>
           </div>
           <div className="service-item">
             <img src="/dmac.jpg" alt="Service#3" className="service1 border-8 border-gray-900 mx-auto"/>
             <div className="text-box">
               <p className="text-content"> Explore the company's vacancies and roles.</p>
-              <Link to={"#service-psv"} className="nav-button">PSV</Link>
+              <Link to={"/service-psv"} className="nav-button">PSV</Link>
             </div>
           </div>
         </div>

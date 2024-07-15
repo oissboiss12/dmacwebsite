@@ -5,8 +5,10 @@ import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,6 +16,18 @@ function NavBar() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+
+  const handleLogoClick = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      localStorage.removeItem('token');
+      navigate('/login/login')
+      console.log('Token', token)
+    } else {
+      navigate('/')
+    }
+  }
   
 
 
@@ -39,7 +53,7 @@ function NavBar() {
     <>
     {/* NavBar */}
     <div className="App-header border-2 border-gray-900 flex justify-between items-center px-4 py-2">
-      <img className="dmac_Logo" src="/dmac.jpg" alt="DMAC logo" />
+      <img className="dmac_Logo" src="/dmac.jpg" alt="DMAC logo" onClick={handleLogoClick}/>
       <button className="md:hidden text-white" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} size="lg" />
       </button>
@@ -58,9 +72,9 @@ function NavBar() {
             <Link to="/services" className="nav-link">Services <FontAwesomeIcon icon={faCaretDown} className="ml-1" /></Link>
             <div className="absolute hidden group-hover:block bg-[#758D40] bg-opacity-75 text-black py-2">
               <Link to="/spare-parts" className="dropdown-link block px-4 py-2">Spare Parts</Link>
-              <Link to="#service-repairs" className="dropdown-link block px-4 py-2">Repairs </Link>
-              <Link to="#service-fabrication" className="dropdown-link block px-4 py-2">Fabrication </Link>
-              <Link to="#service-psv" className="dropdown-link block px-4 py-2">PSV</Link>
+              <Link to="/service-repairs" className="dropdown-link block px-4 py-2">Repairs </Link>
+              <Link to="/service-fabrication" className="dropdown-link block px-4 py-2">Fabrication </Link>
+              <Link to="/service-psv" className="dropdown-link block px-4 py-2">PSV</Link>
             </div>
           </div>
         <Link to="/contact-us" className="nav-link">Contact</Link>

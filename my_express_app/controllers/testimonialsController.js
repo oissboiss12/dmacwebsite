@@ -1,46 +1,83 @@
-const Testimonials = require('../models/testimonials');
+const Testimonial = require('../models/testimonials.js');
+const { deleteFile } = require('../utils/fileUtils.js');
 
-//Create
-exports.createTest = async (req, res) => {
-    const { client, review, stars, logo } = req.body; //define fields as constant
-    try {
-        const newTest = new Testimonials({client, review, stars, logo });
-        const savedTest = await newTest.save();
-        res.status(201).json({ message: 'Testimonial Created Successfully', id: savedTest._id});
-    } catch (error) {
-        res.status(400).json({ error: 'Error creating testimonial'});
-    }
+const createTest = async (req, res, newTestimonialData) => {
+  try {
+    console.log('Creating testimonial with data:', newTestimonialData);
+    const newTestimonial = new Testimonial(newTestimonialData);
+    const savedTestimonial = await newTestimonial.save();
+    res.status(201).json(savedTestimonial);
+  } catch (error) {
+    console.log('Error creating testimonial:', error.message);
+    res.status(400).json({ error: 'Error creating testimonial', details: error.message });
+  }
 };
 
-//Recieve
-exports.getTest = async (req, res) => {
-    try {
-        const test = await Testimonials.find();
-        res.status(200).json(test);
-    } catch (error) {
-        res.status(400).json({ error: 'Error fetching testimonial'});
-    }
+const getTest = async (req, res) => {
+  try {
+    const testimonials = await Testimonial.find();
+    res.status(200).json(testimonials);
+  } catch (error) {
+    res.status(400).json({ error: 'Error fetching testimonials', details: error.message });
+  }
 };
 
-//Update
-exports.updateTest = async (req, res) => {
-    const { id } = req.params;
-    const { client, review, stars, logo } = req.body;
-    try {
-        await Testimonials.findByIdAndUpdate(id, { client, review, stars, logo });
-        res.status(200).json({message: 'Testimonial updated successfully'});
-    } catch (error) {
-        res.status(400).json({ error: 'Error updating testimonial'});
+const updateTest = async (req, res) => {
+  const { id } = req.params;
+
+  const updatedTestimonialData = {
+    client: req.body.client,
+    review: req.body.review,
+    stars: req.body.stars,
+  };
+
+  if (req.file) {
+    updatedTestimonialData.logo = [req.file.filename];
+  }
+
+  try {
+    const testimonial = await Testimonial.findById(id);
+    if (!testimonial) {
+      return res.status(404).json({error: 'Testimonial not found'});
     }
+
+    if (req.file && testimonial.logo && testimonial.logo.length > 0) {
+      testimonial.logo.forEach(deleteFile);
+      console.log('Testimonial Logo edited');
+    } else {
+      console.error('Error Editing logo');
+    }
+
+    Object.assign(testimonial, updatedTestimonialData);
+    const updatedTestimonial = await testimonial.save();
+    res.status(200).json(updatedTestimonial);
+
+  } catch (error) {
+    res.status(400).json({ error: 'Error updating testimonial', details: error.message });
+  }
 };
 
-//Update
-exports.deleteTest = async (req, res) => {
-    const { id } = req.params;
-    try {
-        await Testimonials.findByIdAndDelete(id);
-        res.status(200).json({message: 'Testimonial deleted successfully'});
-    } catch (error) {
-        res.status(400).json({ error: 'Error deleting testimonial'});
+const deleteTest = async (req, res) => {
+  const { id } = req.params;
+  const testimonials = await Testimonial.findById(id);
+  try {
+    await Testimonial.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Testimonial deleted' });
+    console.log('Testimonial Deleted');
+
+    if (testimonials.logo && testimonials.logo.length > 0) {
+      testimonials.logo.forEach(deleteFile);
     }
+
+  } catch (error) {
+    res.status(400).json({ error: 'Error deleting testimonial', details: error.message });
+  }
+
+};
+
+module.exports = {
+  createTest,
+  getTest,
+  updateTest,
+  deleteTest
 };

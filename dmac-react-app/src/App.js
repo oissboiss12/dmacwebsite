@@ -6,10 +6,15 @@ import AboutTeam from "./AboutTeam";
 import AboutCareers from "./AboutCareers";
 import Services from "./services";
 import SpareParts from "./spare-parts";
+import Login from "./Login";
 import './index.css';
 import './App.css';
 import ContactUs from "./ContactUs";
+import Repairs from "./repairs";
 import {Route, Routes} from 'react-router-dom';
+import Fabrication from "./fabrication";
+import PSV from "./psv";
+
 
 function App() {
     return(
@@ -24,6 +29,10 @@ function App() {
                 <Route path="/services" element={<Services/>} />
                 <Route path="/spare-parts" element={<SpareParts/>} />
                 <Route path="/contact-us" element={<ContactUs/>} />
+                <Route path="/login/login" element={<Login/>} />
+                <Route path="/service-repairs" element={<Repairs/>} />
+                <Route path="/service-fabrication" element={<Fabrication/>} />
+                <Route path="/service-psv" element={<PSV/>} />
             </Routes>
         </div>
     );

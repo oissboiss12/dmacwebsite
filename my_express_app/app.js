@@ -1,50 +1,66 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
-const redis = require('redis');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const multer = require('multer');
+
+dotenv.config();
+
 const adminRoute = require('./routes/admin-route');
 const testRoute = require('./routes/testimonials-route');
 const newsRoute = require('./routes/news-route');
 const connectDB = require('./config/db');
-const { isBlacklisted } = require('./middleware/tokenBlacklist'); // Ensure you use the correct function for middleware
-require('dotenv').config(); // Make sure to install dotenv
-
-const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
-const cors = require('cors');
+const { isBlacklisted } = require('./middleware/tokenBlacklist');
 
 const app = express();
 
 // Connect Database
 connectDB();
 
-// Initialize Redis client - port is 6379
-// Ensure that redis is installed on the device first and run it (e.g. CMD as Admin ->  redis-server )
-// Redis Installer v5.0.14.1 - https://github.com/tporadowski/redis/releases/download/v5.0.14.1/Redis-x64-5.0.14.1.msi
-const client = redis.createClient({
-    url: 'redis://127.0.0.1:6379'
-});
-
-client.on('error', (err) => {
-    console.error('Redis error:', err);
-});
-
-client.on('connect', () => {
-    console.log('Connected to Redis');
-});
-
 // Middleware
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Use isBlacklisted middleware for routes that require authentication
 app.use(isBlacklisted);
+
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // Routes
 app.use('/api/v1.0/admin', adminRoute);
 app.use('/api/v1.0/news', newsRoute);
 app.use('/api/v1.0/testimonials', testRoute);
 
+// app.post('/api/v1.0/testimonials', upload.single('logo'), (req, res) => {
+//   // Here you would save the testimonial data to your database, including the file path
+//   const { client, review, stars } = req.body;
+//   const logo = req.file.path;
+
+//   const newTestimonial = new Testimonial({
+//     client,
+//     review,
+//     stars,
+//     logo,
+//   });
+
+//   newTestimonial.save()
+//     .then(testimonial => res.json(testimonial))
+//     .catch(err => res.status(500).json({ error: err.message }));
+// });
 
 // Email route
 app.post('/send', (req, res) => {
