@@ -9,26 +9,6 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Carousel } from 'react-responsive-carousel';
 import EditTestimonialModal from './editTestimonials';
 
-const dotStyle = {
-  backgroundColor: 'white',
-  border: '2px solid #ccc',
-  width: '20px',
-  height: '20px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  margin: '0 10px',
-  cursor: 'pointer',
-  borderRadius: '50%',
-};
-
-const selectedDotStyle = {
-  ...dotStyle,
-  backgroundColor: '#fff',
-  color: '#fff',
-  border: '4px solid #000',
-};
-
 const Home = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [newTestimonial, setNewTestimonial] = useState({
@@ -40,6 +20,8 @@ const Home = () => {
 
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const testimonialsPerPage = 3;
 
   const isAuthenticated = () => {
     return !!localStorage.getItem('token');
@@ -106,7 +88,7 @@ const Home = () => {
   const handleSave = (updatedTestimonial) => {
     setTestimonials(
       testimonials.map((testimonial) =>
-      testimonial._id === updatedTestimonial._id ? updatedTestimonial : testimonial
+        testimonial._id === updatedTestimonial._id ? updatedTestimonial : testimonial
       )
     );
   };
@@ -127,6 +109,19 @@ const Home = () => {
       <FontAwesomeIcon key={index} icon={faStar} className="text-yellow-500" />
     ));
   };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const indexOfLastTestimonial = currentPage * testimonialsPerPage;
+  const indexOfFirstTestimonial = indexOfLastTestimonial - testimonialsPerPage;
+  const currentTestimonials = testimonials.slice(indexOfFirstTestimonial, indexOfLastTestimonial);
+  const totalPages = Math.ceil(testimonials.length / testimonialsPerPage);
 
   return (
     <div className="min-h-screen bg-black">
@@ -162,49 +157,51 @@ const Home = () => {
           <Carousel
             showThumbs={false}
             showStatus={false}
-            renderIndicator={(onClickHandler, isSelected, index, label) => {
-              const style = isSelected ? selectedDotStyle : dotStyle;
-              return (
-                <li
-                  style={style}
-                  onClick={onClickHandler}
-                  onKeyDown={onClickHandler}
-                  value={index}
-                  key={index}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`${label} ${index + 1}`}
-                >
-                  {index + 1}
-                </li>
-              );
-            }}
+            renderIndicator={null} 
           >
-            {testimonials.length > 0 ? (
-              testimonials.map((testimonial, index) => (
-                <div key={index}>
-                  <img src={testimonial.logo && testimonial.logo.length > 0 ? `http://localhost:3001/uploads/${testimonial.logo[0]}` : ''} alt={`Img ${index + 1}`} />
+            {currentTestimonials.map((testimonial, index) => (
+              <div key={index} className="testimonial-slide">
+                <img
+                  src={testimonial.logo && testimonial.logo.length > 0 ? `http://localhost:3001/uploads/${testimonial.logo[0]}` : ''}
+                  alt={`Img ${index + 1}`}
+                />
+                <div>
                   <p className="legend text-client-size">{testimonial.client}</p>
-                  <p>{testimonial.review}</p>
+                  <p className="review">{testimonial.review}</p>
                   <div className="stars">{renderStars(testimonial.stars)}</div>
                   {isAuthenticated() && (
-                  <div>
-                    <button
-                      className="delete-bg border-2 border-black py-2 px-4 text-white custom-button"
-                      onClick={() => deleteTestimonial(testimonial._id)}>
-                      Delete
-                    </button>
-                    <button
-                    className='edit-bg border-2 border-black py-2 px-4 text-white custom-button'
-                    onClick={() => openEditModal(testimonial)}> Edit</button>
-                  </div>
+                    <div className="button-container">
+                      <button
+                        className="delete-bg border-2 border-black py-2 px-4 text-white custom-button"
+                        onClick={() => deleteTestimonial(testimonial._id)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="edit-bg border-2 border-black py-2 px-4 text-white custom-button"
+                        onClick={() => openEditModal(testimonial)}
+                      >
+                        Edit
+                      </button>
+                    </div>
                   )}
                 </div>
-              ))
-            ) : (
-              <p>No testimonials available</p>
-            )}
+              </div>
+            ))}
           </Carousel>
+
+          <div className="pagination-controls flex justify-center mt-4">
+            {currentPage > 1 && (
+              <button className="prev-button nav-link border-2 border-black py-2 px-4 text-black custom-button" onClick={handlePreviousPage}>
+                Previous
+              </button>
+            )}
+            {currentPage < totalPages && (
+              <button className="next-button nav-link border-2 border-black py-2 px-4 text-black custom-button ml-2" onClick={handleNextPage}>
+                Next
+              </button>
+            )}
+          </div>
 
           {isAuthenticated() && (
             <div className="mt-8 flex justify-center flex-col items-center">
@@ -257,10 +254,33 @@ const Home = () => {
                   isOpen={isEditModalOpen}
                   onRequestClose={closeEditModal}
                   testimonial={selectedTestimonial}
-                  onSave={handleSave}/>
+                  onSave={handleSave}
+                />
               )}
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row items-center justify-center w-full min-h-screen p-4">
+        <div className="flex flex-col md:flex-row bg-[#758D40] bg-opacity-75 p-4 shadow-md space-y-4 md:space-y-0 md:space-x-4 w-full max-w-4xl">
+          <div className="flex flex-col w-full md:w-1/3 bg-[#758D40] bg-opacity-100 p-4">
+            <h1 className="text mt-6 mb-2">Services</h1>
+            <h1 className="text2 mb-4">Look at what we offer</h1>
+            <div className="flex justify-center">
+              <Link to="/services" className="nav-link border-2 border-black py-2 px-4 text-black">
+                Services
+              </Link>
+            </div>
+          </div>
+          <div className="flex flex-col w-full md:w-1/3 bg-[#758D40] bg-opacity-100 p-4">
+            <p className="text1 mt-6 md:mt-10">
+              Visit the Services page to look at our vast products and services that we offer. We strive to deliver services at a high quality with our most experienced staff.
+            </p>
+          </div>
+          <div className="flex items-center justify-center w-full md:w-1/3 bg-gray-900 p-2 container-bg">
+            <img src="/dmac.jpg" alt="DMAC Logo" className="w-full h-full object-contain" />
+          </div>
         </div>
       </div>
     </div>

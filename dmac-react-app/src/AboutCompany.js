@@ -24,8 +24,8 @@ const AboutCompany = () => {
                     At DMAC Truck and Trailer, we pride ourselves on being a leading specialist in the manufacturing, servicing, and repair of rigid body and specialist trailers. With a commitment to quality and reliability, we strive to keep your vehicles in top condition, minimizing downtime and maximizing efficiency for your business.
                     </p>
                     <img className="w-full md:w-1/2 border-4 mt-4 border-bg border-opacity-50" alt='MissionImg' src="/dmac.jpg"/>
-                    </div>
                 </div>
+            </div>
 
             <div className="p-8 justify-between items-center bg-black space-y-4 md:space-x-4 mt-2">
             <h2 className="client-title text-center"> The Clients</h2>

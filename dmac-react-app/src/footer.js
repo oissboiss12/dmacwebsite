@@ -8,16 +8,21 @@ function Footer() {
             <div className="container mx-auto px-4 flex justify-between items-center">
             <div className="flex-1">
                 <ul className="space-y-2">
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
+                <h2 className="footer-title">Quick Links </h2>
+                <li> <a href="/about">About Us</a></li>
+                <li> <a href="/services">Services </a></li>
+                <li> <a href="/contact-us">Contact Us </a></li>
+                <li> <a href="/news">News </a></li>
                 </ul>
             </div>
             <div className="flex-1 text-center">
-            <ul className="space-y-2">
-                <li>Link 4</li>
-                <li>Link 5</li>
-                <li>Link 6</li>
+            <ul className="space-y-2 flex-1">
+                <h2 className="footer-title">DMAC Truck and Trailers Ltd. </h2>
+                <p className="p-text">Ronan Valley Business Park, </p>
+                <p className="p-text">60 Ballyronan Road</p>
+                <p className="p-text">Magherafelt, United Kingdom, BT45 6EW</p>
+                <li></li>
+                <p className="p-text"> Phone: +44 7876 110256 </p>
             </ul>
             </div>
             </div>

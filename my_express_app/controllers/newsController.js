@@ -1,63 +1,91 @@
-const News = require('../models/news');
+const News = require('../models/News');
+const { deleteFile } = require('../utils/fileUtils');
 
-// Create
-exports.createNews = async (req, res) => {
-    const { title, description, link, images} = req.body; //define the fields as a constant
-    try {
-        const newNews = new News({ title, description, link, images}); //Constant for creating the fields from the model
-        const savedNews = await newNews.save(); 
-        res.status(201).json({message: 'News created successfully', id: savedNews._id}); //return status code 201 and convert to json
-    } catch (error) {
-        res.status(400).json({ error: 'Error creating news'}); // Return status code 400
+const createNews = async (req, res) => {
+  try {
+    const newNewsData = {
+      title: req.body.title,
+      description: req.body.description,
+      link: req.body.link,
+      date: req.body.date,
+    };
+    
+    if (req.file) {
+      newNewsData.images = [req.file.filename];
     }
+    
+    const newNews = new News(newNewsData);
+    const savedNews = await newNews.save();
+    res.status(201).json(savedNews);
+  } catch (error) {
+    res.status(400).json({ error: 'Error creating news', details: error.message });
+  }
 };
 
-//Recieve
-exports.getNews = async (req,res) => {
-    try {
-        const news = await News.find(); //Find the records on the database from the model
-        res.json(news); //convert to json
-    } catch (error) {
-        res.status(400).json({ error: 'Error fetching news'}); //return status code 400
-    }
+const getNews = async (req, res) => {
+  try {
+    const news = await News.find();
+    res.status(200).json(news);
+  } catch (error) {
+    res.status(400).json({ error: 'Error fetching news', details: error.message });
+  }
 };
 
-//Recieve single
-exports.getSingleNews = async (req,res) => {
-    const { id } = req.params;
-    try {
-        const singleNews = await News.findById(id); //Find the record on the database from the model using the ID
-        if (!singleNews) {
-            console.log('News not found');
-            return res.status(400).json( {error: "News not found"});
-        }//If ID is not found - return status code 400
-        res.json(singleNews); //convert to json
-    } catch (error) {
-        console.error('Error fetching news:', error);
-        res.status(400).json({ error: 'Error fetching news'}); //return status code 400
+const updateNews = async (req, res) => {
+  const { id } = req.params;
+  const updatedNewsData = {
+    title: req.body.title,
+    description: req.body.description,
+    link: req.body.link,
+    date: req.body.date,
+  };
+
+  if (req.file) {
+    updatedNewsData.images = [req.file.filename];
+  }
+
+  try {
+    const newsItem = await News.findById(id);
+    if (!newsItem) {
+      return res.status(404).json({ error: 'News item not found' });
     }
+
+    // Delete the old image if a new one is uploaded
+    if (req.file && newsItem.images && newsItem.images.length > 0) {
+      newsItem.images.forEach(deleteFile);
+    }
+
+    Object.assign(newsItem, updatedNewsData);
+    const updatedNews = await newsItem.save();
+    res.status(200).json(updatedNews);
+  } catch (error) {
+    res.status(400).json({ error: 'Error updating news', details: error.message });
+  }
 };
 
-//Update
-exports.updateNews = async (req,res) => {
-    const { id } = req.params;
-    const { title, description, link, images} = req.body;
-    try {
-        await News.findByIdAndUpdate(id, { title, description, link, images});
-        res.status(200).json({ message: 'News updated successfully'});
-    } catch (error) {
-        res.status(400).json({ error: 'Error updating news'});
+const deleteNews = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const newsItem = await News.findById(id);
+    if (!newsItem) {
+      return res.status(404).json({ error: 'News item not found' });
     }
+
+    // Delete the associated file
+    if (newsItem.images && newsItem.images.length > 0) {
+      newsItem.images.forEach(deleteFile);
+    }
+
+    await News.findByIdAndDelete(id);
+    res.status(200).json({ message: 'News item deleted' });
+  } catch (error) {
+    res.status(400).json({ error: 'Error deleting news', details: error.message });
+  }
 };
 
-//Delete
-exports.deleteNews = async (req,res) => {
-    const { id } = req.params;
-    try {
-        await News.findByIdAndDelete(id);
-        res.status(200).json({ message: 'News deleted successfully'});
-    } catch (error) {
-        res.status(400).json({ error: 'Error deleting news'});
-    }
+module.exports = {
+  createNews,
+  getNews,
+  updateNews,
+  deleteNews
 };
-

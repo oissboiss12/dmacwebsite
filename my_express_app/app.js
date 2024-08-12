@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const multer = require('multer');
+const twilio = require('twilio');
 
 dotenv.config();
 
@@ -44,23 +45,6 @@ const upload = multer({ storage: storage });
 app.use('/api/v1.0/admin', adminRoute);
 app.use('/api/v1.0/news', newsRoute);
 app.use('/api/v1.0/testimonials', testRoute);
-
-// app.post('/api/v1.0/testimonials', upload.single('logo'), (req, res) => {
-//   // Here you would save the testimonial data to your database, including the file path
-//   const { client, review, stars } = req.body;
-//   const logo = req.file.path;
-
-//   const newTestimonial = new Testimonial({
-//     client,
-//     review,
-//     stars,
-//     logo,
-//   });
-
-//   newTestimonial.save()
-//     .then(testimonial => res.json(testimonial))
-//     .catch(err => res.status(500).json({ error: err.message }));
-// });
 
 // Email route
 app.post('/send', (req, res) => {

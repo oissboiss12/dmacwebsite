@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './editTestimonials.css';
 
 Modal.setAppElement('#root'); //Avoid accessibility issues
 
@@ -51,11 +52,12 @@ const EditTestimonialModal = ({ isOpen, onRequestClose, testimonial, onSave}) =>
     return (
         <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel='Edit Testimonial'>
             <div className='text-white flex flex-row md:flex-col bg-[#758D40]'>
-                <h2>Edit Testimonial</h2>
+                <h2 className='h2-size'>Edit Testimonial</h2>
                 <form onSubmit={handleSubmit}>
                     <button onClick={onRequestClose}> 
                         <FontAwesomeIcon icon={faX} size='2x'/>
                     </button> 
+                    <div className='input-container'>
                     <input
                         type='text'
                         className='text-black'
@@ -86,6 +88,7 @@ const EditTestimonialModal = ({ isOpen, onRequestClose, testimonial, onSave}) =>
                         name='logo'
                         onChange={handleFileChange}/>
                     <button type='submit'> Save </button>
+                    </div>
                 </form>
             </div>
         </Modal>

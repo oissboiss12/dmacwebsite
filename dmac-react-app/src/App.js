@@ -14,6 +14,7 @@ import Repairs from "./repairs";
 import {Route, Routes} from 'react-router-dom';
 import Fabrication from "./fabrication";
 import PSV from "./psv";
+import News from "./news";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/service-repairs" element={<Repairs/>} />
                 <Route path="/service-fabrication" element={<Fabrication/>} />
                 <Route path="/service-psv" element={<PSV/>} />
+                <Route path="/news" element={<News/>} />
             </Routes>
         </div>
     );

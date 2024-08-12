@@ -1,53 +1,44 @@
-
+/* General carousel adjustments */
 .carousel .slider-wrapper.axis-horizontal .slider {
   display: flex;
+  flex-direction: row; /* Default direction for larger screens */
 }
 
-.carousel .slider-wrapper.axis-horizontal .slider .slide {
-  flex: 1;
+.carousel .slide {
   display: flex;
+  flex-direction: row; /* Display testimonials in row for each slide */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Styling for individual testimonial slides */
+.testimonial-chunk {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
-.carousel .control-dots {
+.testimonial-slide {
+  flex: 0 1 30%; /* Adjust to fit up to 3 testimonials per row */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin: 20px 0;
+  text-align: center;
+  margin: 10px;
 }
 
-.carousel .control-dots .dot {
-  background-color: transparent;
-  border: 1px solid #ccc;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 10px;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.carousel .control-dots .dot.selected {
-  background-color: #000;
-  color: #fff;
-}
 
 @media (max-width: 768px) {
-  .client-title {
-    font-size: 1.75rem;
-  }
-
-  .carousel .slider-wrapper.axis-horizontal .slider {
+  .testimonial-chunk {
     flex-direction: column;
   }
-}
 
-@media (min-width: 769px) {
-  .carousel .slider-wrapper.axis-horizontal .slider {
-    flex-direction: row;
+  .testimonial-slide {
+    flex: 1 1 100%;
+    margin: 10px 0;
   }
 }
 
@@ -60,11 +51,9 @@
   pointer-events: none;
 }
 
-
 .text {
   font-size: 48px;
   font-weight: 1000;
-  
   text-align: center;
   color: black;
 }
@@ -79,11 +68,9 @@
 .text2 {
   font-size: 28px;
   font-weight: 1000;
-  
   text-align: center;
   color: black;
 }
-
 
 .border-color {
   border-color: #000000;

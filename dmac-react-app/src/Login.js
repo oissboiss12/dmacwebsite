@@ -4,6 +4,7 @@ import "./App.css";
 import "./index.css";
 import axios from "axios";
 import './Login.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -16,6 +17,7 @@ const Login = () => {
     }]);
     
     const [error, setError] = useState('');
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -49,6 +51,10 @@ const Login = () => {
             });
     }
 
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+
     return(
         <div className="bg-black min-h-screen text-white">
             <div className="relative bg-cover bg-center h-64 flex items-center justify center" style={{backgroundImage: 'url(/dmac.jpg)' }}>
@@ -65,7 +71,7 @@ const Login = () => {
                     <div className="form-group">
                         <label htmlFor="email"> Email: </label>
                         <input
-                            type=""
+                            type="email"
                             id="email"
                             name="email"
                             value={formData.email}
@@ -73,12 +79,19 @@ const Login = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password"> Password: </label>
-                        <input
-                            type=""
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}/>
+                            <div className="password-input-container">
+                                <input
+                                    type={passwordVisible ? "text" : "password"}
+                                    id="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}/>
+                                <i
+                                    className={`fas ${passwordVisible ? "fa-eye-slash" : "fa-eye"}`}
+                                    onClick={togglePasswordVisibility}
+                                    style={{ cursor: 'pointer', marginLeft: '10px' }}
+                                />
+                        </div>
                     </div>
                     <button type="submit" className="bg-[#4caf50] border-2 border-black">Login</button>
                 </form>

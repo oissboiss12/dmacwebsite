@@ -78,7 +78,7 @@ function NavBar() {
             </div>
           </div>
         <Link to="/contact-us" className="nav-link">Contact</Link>
-        <Link to="#news" className="nav-link">News</Link>
+        <Link to="/news" className="nav-link">News</Link>
       </nav>
     </div>
 
@@ -90,7 +90,7 @@ function NavBar() {
       <Link to="/about" className="nav-link py-2">About Us</Link>
       <Link to="/services" className="nav-link py-2">Services</Link>
       <Link to="/contact-us" className="nav-link py-2">Contact</Link>
-      <Link to="#news" className="nav-link py-2">News</Link>
+      <Link to="/news" className="nav-link py-2">News</Link>
     </div>
   </div>
 
