@@ -3,6 +3,14 @@
     text-align: center;
 }
 
+.icon-with-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 10px;
+}
+
 .input-container {
     display: flex;
     flex-direction: column;

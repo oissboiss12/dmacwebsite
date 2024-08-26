@@ -52,11 +52,13 @@ const EditTestimonialModal = ({ isOpen, onRequestClose, testimonial, onSave}) =>
     return (
         <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel='Edit Testimonial'>
             <div className='text-white flex flex-row md:flex-col bg-[#758D40]'>
-                <h2 className='h2-size'>Edit Testimonial</h2>
                 <form onSubmit={handleSubmit}>
-                    <button onClick={onRequestClose}> 
-                        <FontAwesomeIcon icon={faX} size='2x'/>
-                    </button> 
+                    <div className='icon-with-title'>
+                        <h2 className='h2-size'>Edit Testimonial</h2>
+                        <button onClick={onRequestClose}> 
+                            <FontAwesomeIcon icon={faX} size='1x'/>
+                        </button>
+                    </div> 
                     <div className='input-container'>
                     <input
                         type='text'
